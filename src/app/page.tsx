@@ -9,9 +9,9 @@ export default function Home() {
           <Image
             src="http://petro.themegum.com/elementor/wp-content/uploads/sites/3/2017/06/slide-2.jpg"
             alt="Background Image"
-            layout="fill"
-            objectFit="cover"
             className="w-full h-full"
+            width={1000}
+            height={1000}
           />
         </div>
         <div className="relative z-10 text-white text-center mt-[-3rem] p-4 rounded-xl px-10">

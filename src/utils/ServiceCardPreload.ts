@@ -63,11 +63,11 @@ export const ServiceCardPreload = [
       "Relevamiento, registro y ponderación de los factores de riesgo ergonómicos de cada trabajador representativo. El estudio esta liderados por profesionales con experiencia y formación académica en ergonomía, que haciendo uso de softwares de ultima generación, posibilitan la aplicación de diferentes métodos de estudio ergonómicos reconocidos a nivel internacional.",
     imgUrl: "https://somossinergia.com.ar/wp-content/uploads/2024/03/ergo.jpg",
   },
-  // {
-  //   id: 10,
-  //   title: "CARGA DE FUEGO (Anexo VII Dec. 351/79)",
-  //   description:
-  //     "Relevamiento de campo y elaboración de una memoria de incendio, considerando todos los requerimientos y consideraciones aplicables del Capitulo XVII – Anexo VII  del Decreto 351/79. La elaboración del informe está a cargo de profesionales con experiencia y formación académica en la materia y serán pasibles de visado por colegio profesional en la medida que sea requerido y aplique.",
-  //   imgUrl: "https://somossinergia.com.ar/wp-content/uploads/2024/03/carga-de-fuego.png",
-  // },
+  {
+    id: 10,
+    title: "CARGA DE FUEGO (Anexo VII Dec. 351/79)",
+    description:
+      "Relevamiento de campo y elaboración de una memoria de incendio, considerando todos los requerimientos y consideraciones aplicables del Capitulo XVII – Anexo VII  del Decreto 351/79. La elaboración del informe está a cargo de profesionales con experiencia y formación académica en la materia y serán pasibles de visado por colegio profesional en la medida que sea requerido y aplique.",
+    imgUrl: "https://somossinergia.com.ar/wp-content/uploads/2024/03/carga-de-fuego.png",
+  },
 ];
