@@ -1,10 +1,16 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import LoginButton from "@/app/api/auth/LoginButton";
+
+import { useUser } from "@auth0/nextjs-auth0/client";
+import LogoutButton from "@/app/api/auth/LogoutButton";
 
 const NavBar = () => {
+  const { user, isLoading } = useUser();
   return (
     <div className="w-screen bg-[#eff3f6] border border-[#dcdde1] text-black shadow-lg">
-      <div className="container mx-auto flex items-center h-24">
+      <div className="container mx-auto flex items-center h-24 justify-center">
         <a href="" className="flex items-center justify-center">
           <Image
             className="h-16"
@@ -27,6 +33,19 @@ const NavBar = () => {
             </div>
           </div>
         </div>
+        {!user && !isLoading && (
+          <div className="flex items-center gap-2">
+            <LoginButton />
+          </div>
+        )}
+        {user && !isLoading && (
+          <div className="flex items-center">
+            <div>Bienvenido {user.email}</div>
+            <div>
+              <LogoutButton />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

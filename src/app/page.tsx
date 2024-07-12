@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div>
       <div className="relative w-full h-[45rem] flex items-center justify-center">
@@ -17,7 +17,9 @@ export default function Home() {
         <div className="relative z-10 text-white text-center mt-[-3rem] p-4 rounded-xl px-10">
           <div>
             <h1 className="text-[5rem] font-bold mb-4">SOMOS SINERGIA</h1>
-            <h3 className="text-[2rem]">Seguridad e Higiene y Medio Ambiente</h3>
+            <h3 className="text-[2rem]">
+              Seguridad e Higiene y Medio Ambiente
+            </h3>
           </div>
         </div>
       </div>
@@ -26,23 +28,25 @@ export default function Home() {
           <div className="bg-[#eff3f6] border border-[#dcdde1] hover:bg-blue-200 hover:border-blue-300 transition-all duration-300 text-black md:w-80 min-h-[15rem] p-6 flex flex-col justify-start items-center">
             <h2 className="text-xl mb-4 font-bold">Nuestra Misión</h2>
             <p className="text-sm text-justify">
-              Ser un respaldo confiable y fundamental para nuestros clientes, al ofrecer servicios
-              personalizados y profesionales con el fin de ayudarlos a lograr sus objetivos y
-              alcanzar sus metas, en un proceso permanente de mejora continua.
+              Ser un respaldo confiable y fundamental para nuestros clientes, al
+              ofrecer servicios personalizados y profesionales con el fin de
+              ayudarlos a lograr sus objetivos y alcanzar sus metas, en un
+              proceso permanente de mejora continua.
             </p>
           </div>
           <div className="bg-[#eff3f6] border border-[#dcdde1] hover:bg-blue-200 hover:border-blue-300 transition-all duration-300 text-black md:w-80 min-h-[15rem] p-6 flex flex-col justify-start items-center">
             <h2 className="text-xl mb-4 font-bold">Nuestros Valores</h2>
             <p className="text-sm text-justify">
-              Compromiso, calidad, trabajo en equipo, responsabilidad personal y excelencia
-              profesional.
+              Compromiso, calidad, trabajo en equipo, responsabilidad personal y
+              excelencia profesional.
             </p>
           </div>
           <div className="bg-[#eff3f6] border border-[#dcdde1] hover:bg-blue-200 hover:border-blue-300 transition-all duration-300 text-black md:w-80 min-h-[15rem] p-6 flex flex-col justify-start items-center">
             <h2 className="text-xl mb-4 font-bold">Nuestra Visión</h2>
             <p className="text-sm text-justify">
-              Ser líderes a nivel nacional en materia de asesoramiento, representación técnica y
-              servicios de Seguridad e Higiene y Medio Ambiente.
+              Ser líderes a nivel nacional en materia de asesoramiento,
+              representación técnica y servicios de Seguridad e Higiene y Medio
+              Ambiente.
             </p>
           </div>
         </div>
@@ -53,17 +57,19 @@ export default function Home() {
         </div>
         <div className="relative flex">
           <div className="border-r-2 border-blue-300 pr-4 mr-4 float-left w-[40%] flex items-center font-bold text-justify">
-            Somos un equipo de profesionales con más de 15 de años experiencia en el área de
-            Seguridad e Higiene y Medio Ambiente.
+            Somos un equipo de profesionales con más de 15 de años experiencia
+            en el área de Seguridad e Higiene y Medio Ambiente.
           </div>
           <div className="float-right w-[60%] text-justify">
-            Participamos de importantes proyectos a lo largo y ancho del país, dando soporte y
-            acompañamiento a empresas lideres en la industria de la construcción, formando parte de
-            grandes obras de saneamiento, ingeniería, arquitectura, viales, hídricas e hidráulicas.
-            Desde 2019 nos asentamos en la cuenca neuquina, trabajando al servicio de empresas
-            lideres en la industria Oil&Gas, teniendo la oportunidad de participar en diferentes
-            proyectos para empresas contratistas y de servicios afectados a operadoras como YPF,
-            GeoPark, Oilstone, Shell, Pluspetrol y Chevron.
+            Participamos de importantes proyectos a lo largo y ancho del país,
+            dando soporte y acompañamiento a empresas lideres en la industria de
+            la construcción, formando parte de grandes obras de saneamiento,
+            ingeniería, arquitectura, viales, hídricas e hidráulicas. Desde 2019
+            nos asentamos en la cuenca neuquina, trabajando al servicio de
+            empresas lideres en la industria Oil&Gas, teniendo la oportunidad de
+            participar en diferentes proyectos para empresas contratistas y de
+            servicios afectados a operadoras como YPF, GeoPark, Oilstone, Shell,
+            Pluspetrol y Chevron.
           </div>
         </div>
       </div>
