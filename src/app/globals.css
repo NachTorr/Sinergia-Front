@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes border-color-transition {
+  0%,
+  100% {
+    border-top-color: #0846b5; /* Azul */
+    border-right-color: #fdfe00; /* Amarillo */
+    border-bottom-color: #d91d1f; /* Rojo */
+    border-left-color: #0846b5; /* Azul */
+  }
+  33% {
+    border-top-color: #d91d1f; /* Rojo */
+    border-right-color: #0846b5; /* Azul */
+    border-bottom-color: #fdfe00; /* Amarillo */
+    border-left-color: #d91d1f; /* Rojo */
+  }
+  66% {
+    border-top-color: #fdfe00; /* Amarillo */
+    border-right-color: #d91d1f; /* Rojo */
+    border-bottom-color: #0846b5; /* Azul */
+    border-left-color: #fdfe00; /* Amarillo */
+  }
+}
+
+.animated-border {
+  animation: border-color-transition 5s linear infinite;
+}

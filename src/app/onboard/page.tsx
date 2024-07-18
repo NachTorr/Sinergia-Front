@@ -19,6 +19,7 @@ const PostLogin = () => {
         lastName,
         email: user?.email,
         sub: user?.sub,
+        profileImgUrl: user?.picture,
       }),
     });
 

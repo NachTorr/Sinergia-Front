@@ -1,17 +1,27 @@
+"use client";
 import React from "react";
 import { MdOutlineLogin } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "@/redux/features/userSlice";
 
 const LogoutButton = () => {
+  const dispatch = useDispatch();
+
+  const handleClickLogout = () => {
+    localStorage.removeItem("accessToken");
+    dispatch(logoutUser());
+  };
+
   return (
-    <button className="">
-      <a
-        href="/api/auth/logout"
-        className="flex items-center font-semibold text-base lg:text-lg hover:text-blue-300 transition-all duration-300"
+    <a href="/api/auth/logout">
+      <button
+        onClick={handleClickLogout}
+        className="flex items-center font-semibold text-base lg:text-lg"
       >
         <MdOutlineLogin className="font-bold" />
         <div className="ml-1">Salir</div>
-      </a>
-    </button>
+      </button>
+    </a>
   );
 };
 

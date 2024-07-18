@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["somossinergia.com.ar", "petro.themegum.com"],
+    domains: [
+      "somossinergia.com.ar",
+      "petro.themegum.com",
+      "lh3.googleusercontent.com",
+      "i.ibb.co",
+    ],
   },
 };
 

@@ -13,7 +13,7 @@ export const fetchUserData = async (
       const userData: UserData = await response.json();
       return userData;
     } else {
-      console.error("Failed to fetch user data");
+      console.error(`Failed to fetch user data: ${response.statusText}`);
       return null;
     }
   } catch (error) {
@@ -30,8 +30,6 @@ export const signInUser = async (userData: UserData): Promise<boolean> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
         email: userData.email,
         sub: userData.sub,
       }),
@@ -51,7 +49,7 @@ export const signInUser = async (userData: UserData): Promise<boolean> => {
   }
 };
 
-export const fetchCurrentUser = async () => {
+export const fetchCurrentUser = async (): Promise<UserData | null> => {
   const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) return null;
 

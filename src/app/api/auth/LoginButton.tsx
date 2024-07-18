@@ -5,7 +5,7 @@ function LoginButton() {
     <button className="">
       <a
         href="/api/auth/login"
-        className="flex items-center hover:text-blue-300 transition-all duration-300"
+        className="flex items-center font-semibold text-base lg:text-lg hover:text-blue-300 transition-all duration-300"
       >
         <MdOutlineLogin className="font-bold" />
         <div className="ml-1">Iniciar</div>

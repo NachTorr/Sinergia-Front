@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
@@ -7,25 +7,38 @@ import AboutUs from "@/components/AboutUs/AboutUs";
 import MissionValuesCards from "@/components/MissionValuesCards/MissionValuesCards";
 import { MissionValuesPreload } from "@/utils/MissionValuesPreload";
 import { fetchUserData, signInUser } from "@/helpers/authHelpers";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUserActive } from "@/redux/features/userSlice";
 
 const Home = () => {
+  const dispatch = useAppDispatch();
   const { user, isLoading } = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    const checkUser = async () => {
-      if (!isLoading && user && user.sub) {
-        const userData = await fetchUserData(user.sub);
+    const accessToken = localStorage.getItem("accessToken");
+    if (!isLoading && user?.sub && (!accessToken || accessToken === "")) {
+      const checkUser = async () => {
+        const userData = await fetchUserData(user.sub!);
         if (!userData) {
           router.push("/onboard");
         } else {
           await signInUser(userData);
+          dispatch(
+            setUserActive({
+              firstName: userData.firstName,
+              profileImgUrl: userData.profileImgUrl,
+              lastName: "",
+              email: "",
+              sub: "",
+            })
+          );
         }
-      }
-    };
+      };
 
-    checkUser();
-  }, [user, isLoading, router]);
+      checkUser();
+    }
+  }, [dispatch, user, isLoading, router]);
 
   if (isLoading) return <div>Loading...</div>;
 

@@ -3,4 +3,5 @@ export interface UserData {
   lastName: string;
   email: string;
   sub: string;
+  profileImgUrl: string;
 }

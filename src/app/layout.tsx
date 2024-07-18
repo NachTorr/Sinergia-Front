@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { Providers } from "@/redux/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <UserProvider>
         <body className={inter.className}>
-          <NavBar />
-          {children}
+          <Providers>
+            <NavBar />
+            <div>{children}</div>
+          </Providers>
         </body>
       </UserProvider>
     </html>
