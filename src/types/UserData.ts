@@ -4,4 +4,5 @@ export interface UserData {
   email: string;
   sub: string;
   profileImgUrl: string;
+  role: string;
 }

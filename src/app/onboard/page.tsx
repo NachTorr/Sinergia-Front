@@ -1,4 +1,5 @@
 "use client";
+import { signupUser } from "@/helpers/authHelpers";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FormEvent, useState } from "react";
 
@@ -9,26 +10,22 @@ const PostLogin = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email: user?.email,
-        sub: user?.sub,
-        profileImgUrl: user?.picture,
-      }),
-    });
 
-    if (response.ok) {
-      window.location.href = "/home";
+    const success = await signupUser(
+      firstName,
+      lastName,
+      user?.email ?? undefined,
+      user?.sub ?? undefined,
+      user?.picture ?? undefined
+    );
+
+    if (success) {
+      window.location.href = "/";
     } else {
       console.error("Failed to complete profile");
     }
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="rounded-lg shadow-lg max-w-md">

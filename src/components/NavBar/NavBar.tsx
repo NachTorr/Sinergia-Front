@@ -8,6 +8,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import { useAppSelector } from "@/redux/hooks";
 
 const NavBar = () => {
+  const [activeSection, setActiveSection] = useState("");
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
   const [notificationsModal, setNotificationsModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -67,7 +68,7 @@ const NavBar = () => {
         <div className="contents font-semibold text-base lg:text-lg">
           <div className="mx-auto flex items-center cursor-pointer">
             <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-blue-300 transition-all duration-300">
-              <a href="/home">Inicio</a>
+              <a href="/">Inicio</a>
             </div>
             <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-blue-300 transition-all duration-300">
               <a href="/servicios">Servicios</a>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { getMessages, updateMessageStatus } from "@/helpers/messageHelpers";
 import { MessageData } from "@/types/MessageData";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -117,8 +118,18 @@ function UserMessages() {
 
   return (
     <div className="max-h-[14rem] overflow-y-auto shadow-md rounded-lg">
-      <DataTable columns={columns} data={messages} pagination fixedHeader />
-
+      {messages.length === 0 ? (
+        <div className="flex items-center justify-center p-5">
+          <Image
+            src="/images/Sinergia-NoMessages.png"
+            alt={""}
+            width={160}
+            height={160}
+          />
+        </div>
+      ) : (
+        <DataTable columns={columns} data={messages} pagination fixedHeader />
+      )}
       {showModal && (
         <MessageModal
           isOpen={showModal}

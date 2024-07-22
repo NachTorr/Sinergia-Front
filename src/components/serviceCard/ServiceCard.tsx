@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { ServiceCardType } from "@/types/ServiceCardType";
 
-const ServiceCard = ({ id, title, description, imgUrl }: ServiceCardType) => {
+const ServiceCard = ({ title, imgUrl }: ServiceCardType) => {
   return (
     <div className="group bg-[#eff3f6] border border-[#dcdde1] hover:bg-blue-200 hover:border-blue-300 w-[23rem] h-[30rem] shadow-lg flex flex-col text-center transition-all duration-300 relative overflow-hidden">
       <div className="h-[50%]">

@@ -1,16 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchCurrentUser } from "@/helpers/authHelpers";
+import { fetchCurrentUser } from "@/helpers/userHelpers";
 import Image from "next/image";
 import { UserData } from "@/types/UserData";
 import UserInfo from "./UserInfo";
 import UserMessages from "./UserMessages";
+import UsersList from "./UsersList";
 
 const UserProfile = () => {
   const [currentUser, setCurrentUser] = useState<UserData | null>(null);
-  const [activeSection, setActiveSection] = useState<"info" | "messages">(
-    "info"
-  );
+  const [activeSection, setActiveSection] = useState<
+    "info" | "messages" | "users"
+  >("info");
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -74,6 +75,16 @@ const UserProfile = () => {
                 >
                   Mis Mensajes
                 </button>
+                {currentUser?.role === "ADMIN" && (
+                  <button
+                    onClick={() => setActiveSection("users")}
+                    className={`text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 ${
+                      activeSection === "messages" ? "bg-gray-100" : ""
+                    }`}
+                  >
+                    Ver Usuarios
+                  </button>
+                )}
               </div>
               <div className="px-6">
                 <div className="px-6">
@@ -85,6 +96,7 @@ const UserProfile = () => {
                     />
                   )}
                   {activeSection === "messages" && <UserMessages />}
+                  {activeSection === "users" && <UsersList />}
                 </div>
                 <div className="mt-5 w-full flex flex-col items-center overflow-hidden text-sm"></div>
               </div>
