@@ -54,7 +54,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-screen bg-[#eff3f6] border border-[#dcdde1] text-black shadow-lg">
+    <div className="fixed top-0 left-0 w-screen z-20 bg-[#eff3f6] border border-[#dcdde1] text-black shadow-lg">
       <div className="container mx-auto flex items-center h-24 justify-center">
         <a href="" className="flex items-center justify-center">
           <Image
