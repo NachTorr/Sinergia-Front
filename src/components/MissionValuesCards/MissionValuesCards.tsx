@@ -8,7 +8,7 @@ const MissionValuesCards = ({
   missionValues: MissionValuesCardType[];
 }) => {
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-10 mt-[-10rem] w-fit p-5 mx-auto relative z-10 bg-white">
+    <div className="shadow-lg p-5 grid sm:grid-cols-1 md:grid-cols-3 gap-10 w-fit mx-auto relative z-10 border border-[#DCDDE1]">
       {missionValues?.map((missionValue) => {
         return (
           <div key={missionValue.id}>

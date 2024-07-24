@@ -3,14 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import LoginButton from "@/app/api/auth/LoginButton";
 import LogoutButton from "@/app/api/auth/LogoutButton";
-import { IoMdNotifications } from "react-icons/io";
 import CustomButton from "../CustomButton/CustomButton";
 import { useAppSelector } from "@/redux/hooks";
+import {
+  MdOutlineArrowDropDown,
+  MdOutlineArrowDropUp,
+  MdOutlineLogin,
+} from "react-icons/md";
+import LogoutModal from "../Modals/LogoutModal";
 
 const NavBar = () => {
-  const [activeSection, setActiveSection] = useState("");
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
-  const [notificationsModal, setNotificationsModal] = useState<boolean>(false);
+  const [logoutModal, setLogoutModal] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const currentClickRef = useRef<EventTarget | null>(null);
 
@@ -24,7 +28,6 @@ const NavBar = () => {
         event.target !== currentClickRef.current
       ) {
         handleCloseModal();
-        handleCloseNotifications();
       }
     };
 
@@ -44,13 +47,9 @@ const NavBar = () => {
     setShowUserModal(false);
   };
 
-  const handleShowNotifications = (event: React.MouseEvent<HTMLElement>) => {
-    currentClickRef.current = event.target;
-    setNotificationsModal((prevShowNotification) => !prevShowNotification);
-  };
-
-  const handleCloseNotifications = () => {
-    setNotificationsModal(false);
+  const handleShowLogoutModal = () => {
+    setShowUserModal(false);
+    setLogoutModal(true);
   };
 
   return (
@@ -67,13 +66,13 @@ const NavBar = () => {
         </a>
         <div className="contents font-semibold text-base lg:text-lg">
           <div className="mx-auto flex items-center cursor-pointer">
-            <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-blue-300 transition-all duration-300">
+            <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
               <a href="/">Inicio</a>
             </div>
-            <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-blue-300 transition-all duration-300">
+            <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
               <a href="/servicios">Servicios</a>
             </div>
-            <div className="px-4 py-1 hover:text-blue-300 transition-all duration-300">
+            <div className="px-4 py-1 hover:text-[#46C2CA] transition-all duration-300">
               <a href="/contacto">Contacto</a>
             </div>
           </div>
@@ -86,31 +85,28 @@ const NavBar = () => {
         {user && (
           <div className="relative">
             <div className="flex items-center">
-              {user.profileImgUrl ? (
-                <Image
+              {user.profileImgUrl && (
+                <button
                   onClick={handleShowUserModal}
-                  className="cursor-pointer border p-[1px] border-gray-500 rounded-full "
-                  src={user.profileImgUrl}
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-              ) : (
-                <div className="cursor-pointer border p-[1px] border-gray-500 rounded-full">
+                  className="flex items-center p-2"
+                >
+                  {showUserModal ? (
+                    <MdOutlineArrowDropUp className="size-8 text-blue-900" />
+                  ) : (
+                    <MdOutlineArrowDropDown className="size-8 text-blue-900" />
+                  )}
                   <Image
-                    src="https://i.ibb.co/zZP4TJ3/Default-Profile-Img2.png"
-                    alt=""
+                    className="cursor-pointer border p-[1px] border-gray-500 rounded-full "
+                    src={
+                      user.profileImgUrl ||
+                      "https://i.ibb.co/zZP4TJ3/Default-Profile-Img2.png"
+                    }
                     width={40}
                     height={40}
+                    alt=""
                   />
-                </div>
+                </button>
               )}
-              <button onClick={handleShowNotifications}>
-                <IoMdNotifications
-                  size={39}
-                  className="p-1 bg-[#eff3f6] border border-gray-500 rounded-full ml-2 cursor-pointer hover:bg-blue-200 hover:border-blue-300 transition-all duration-300"
-                />
-              </button>
             </div>
             {showUserModal && (
               <div
@@ -144,54 +140,33 @@ const NavBar = () => {
                       <span className="py-1 border-b border-gray-300">
                         ¡Hola{" "}
                       </span>
-                      <span className="py-1 border-b-2 border-blue-300">
+                      <span className="py-1 border-b-2 border-[#46C2CA]">
                         {user.firstName}!
                       </span>
                     </h5>
                   </div>
                   <div
                     onClick={handleCloseModal}
-                    className="py-2 hover:bg-[#eff3f6] hover:border-r-2 border-blue-300 hover:text-blue-500 transition-all duration-300"
+                    className="py-2 hover:bg-[#eff3f6] hover:border-r-2 border-[#46C2CA] hover:text-[#46C2CA] transition-all duration-300"
                   >
                     <CustomButton name="Tu Perfil" href="/profile" />
                   </div>
-                  <div
-                    onClick={handleCloseModal}
-                    className="py-2 hover:bg-[#eff3f6] hover:border-r-2 border-blue-300 hover:text-blue-500 transition-all duration-300"
+                  <button
+                    onClick={handleShowLogoutModal}
+                    className="hover:bg-[#eff3f6] hover:border-r-2 border-[#46C2CA] hover:text-[#46C2CA] transition-all duration-300"
                   >
-                    <LogoutButton />
-                  </div>
-                </div>
-              </div>
-            )}
-            {notificationsModal && (
-              <div
-                ref={modalRef}
-                className="absolute flex flex-col right-0 mt-2 w-[18rem] bg-[#f5f6fa] border border-[#dcdde1] shadow-lg rounded-lg z-10"
-              >
-                <div className="p-4 flex flex-col gap-2">
-                  <p className="text-center font-semibold">Notificaciones</p>
-                  <CustomButton
-                    name="Notificación 1"
-                    onClick={() => {}}
-                    href={""}
-                  />
-                  <CustomButton
-                    name="Notificación 2"
-                    onClick={() => {}}
-                    href={""}
-                  />
-                  <CustomButton
-                    name="Notificación 3"
-                    onClick={() => {}}
-                    href={""}
-                  />
+                    <div className="flex items-center text-base lg:text-lg py-2 ">
+                      <MdOutlineLogin className="font-bold" />
+                      <div className="font-bold ml-1">Salir</div>
+                    </div>
+                  </button>
                 </div>
               </div>
             )}
           </div>
         )}
       </div>
+      {logoutModal && <LogoutModal setLogoutModal={setLogoutModal} />}
     </div>
   );
 };

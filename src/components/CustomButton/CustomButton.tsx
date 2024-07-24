@@ -7,7 +7,7 @@ const CustomButton: React.FC<ButtonProps> = ({ onClick, name, href }) => {
     <Link href={href}>
       <button
         onClick={onClick}
-        className="flex items-center font-semibold text-base lg:text-lg"
+        className="flex items-center text-base lg:text-lg font-bold"
       >
         <MdOutlineSpaceDashboard className="font-bold" />
         <div className="ml-1">{name}</div>

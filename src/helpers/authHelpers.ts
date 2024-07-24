@@ -1,26 +1,15 @@
+import axiosInstance from "./axiosInstance";
 import { UserData } from "@/types/UserData";
 
 export const signInUser = async (userData: UserData): Promise<boolean> => {
   try {
-    const response = await fetch(`http://localhost:8000/auth/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: userData.email,
-        sub: userData.sub,
-      }),
+    const response = await axiosInstance.post("/auth/signin", {
+      email: userData.email,
+      sub: userData.sub,
     });
 
-    if (response.ok) {
-      const signInData = await response.json();
-      localStorage.setItem("accessToken", signInData.accessToken);
-      return true;
-    } else {
-      console.error("Failed to sign in user");
-      return false;
-    }
+    localStorage.setItem("accessToken", response.data.accessToken);
+    return true;
   } catch (error) {
     console.error("Error signing in user:", error);
     return false;
@@ -33,20 +22,19 @@ export const signupUser = async (
   email: string | undefined,
   sub: string | undefined,
   profileImgUrl: string | undefined
-) => {
-  const response = await fetch("http://localhost:8000/auth/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+): Promise<boolean> => {
+  try {
+    const response = await axiosInstance.post("/auth/signup", {
       firstName,
       lastName,
       email,
       sub,
       profileImgUrl,
-    }),
-  });
+    });
 
-  return response.ok;
+    return response.status === 201;
+  } catch (error) {
+    console.error("Error signing up user:", error);
+    return false;
+  }
 };

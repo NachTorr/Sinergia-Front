@@ -9,3 +9,9 @@ export interface MessageData {
   recipient: UserData;
   createdAt: string;
 }
+
+export interface SendMessageData {
+  title: string;
+  description: string;
+  recipients: number[];
+}

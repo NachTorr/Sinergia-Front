@@ -3,21 +3,23 @@ import Image from "next/image";
 import { getMessages, updateMessageStatus } from "@/helpers/messageHelpers";
 import { MessageData } from "@/types/MessageData";
 import DataTable, { TableColumn } from "react-data-table-component";
-import Date from "../Date/Date";
-import { parseISO } from "date-fns";
+import DateComponent from "../Date/Date";
 import MessageModal from "../Modals/MessageModal";
-import { useAppDispatch } from "@/redux/hooks";
 import { readMessageAction } from "@/redux/features/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import ExpirationModal from "../Modals/ExpirationModal";
 
 function UserMessages() {
   const [showModal, setShowModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<MessageData | null>(
     null
   );
+  const [expirationModal, setExpirationModal] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<MessageData[]>([]);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.userActive);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,12 +27,17 @@ function UserMessages() {
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
           const messages = await getMessages(accessToken);
-          setMessages(messages);
+
+          const sortedMessages = messages.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+          setMessages(sortedMessages);
         } else {
           setError("No access token found");
         }
       } catch (error) {
-        setError("Error fetching messages");
+        setExpirationModal(true);
       } finally {
         setLoading(false);
       }
@@ -39,25 +46,32 @@ function UserMessages() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log("User data:", user);
+  }, [user]);
+
   const handleReadClick = async (message: MessageData) => {
-    setMessages((prevMessages) =>
-      prevMessages.map((msg) =>
-        msg.id === message.id ? { ...msg, status: "READ" } : msg
-      )
-    );
+    if (message.status === "UNREAD" && user?.role === "USER") {
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
+          msg.id === message.id ? { ...msg, status: "READ" } : msg
+        )
+      );
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+          await updateMessageStatus(message.id, accessToken);
+          dispatch(readMessageAction(message.id));
+        } else {
+          setError("No access token found");
+        }
+      } catch (error) {
+        setError("Error updating message status");
+      }
+    }
+
     setSelectedMessage(message);
     setShowModal(true);
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        await updateMessageStatus(message.id, accessToken);
-        dispatch(readMessageAction(message.id));
-      } else {
-        setError("No access token found");
-      }
-    } catch (error) {
-      setError("Error updating message status");
-    }
   };
 
   const handleCloseModal = () => {
@@ -71,14 +85,13 @@ function UserMessages() {
       cell: (row) => (
         <button
           onClick={() => handleReadClick(row)}
-          className="my-4 px-2 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+          className=" ml-4 px-2 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
         >
-          Leer
+          {user?.role === "ADMIN" ? "Ver" : "Leer"}
         </button>
       ),
       ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
+      width: "100px",
     },
     {
       name: "Título",
@@ -86,38 +99,58 @@ function UserMessages() {
       sortable: true,
     },
     {
-      name: "Enviado por",
-      selector: (row) => row.sender.firstName,
-      sortable: true,
-    },
-    {
       name: "Fecha",
-      selector: (row) => parseISO(row.createdAt).toISOString(),
-      cell: (row) => <Date dateString={row.createdAt} />,
+      selector: (row) => row.createdAt,
+      cell: (row) => <DateComponent dateString={row.createdAt} />,
       sortable: true,
     },
     {
       name: "Estado",
       selector: (row) => row.status,
       sortable: true,
-      cell: (row) =>
-        row.status === "READ" ? (
-          <div className="px-4 py-2 rounded-lg bg-green-300 font-bold text-green-700">
-            visto
-          </div>
-        ) : (
-          <div className="px-4 py-2 rounded-lg bg-red-300 font-bold text-red-700">
-            no visto
-          </div>
-        ),
+      cell: (row) => {
+        if (user?.role === "ADMIN") {
+          if (row.sender.id === user.id) {
+            return (
+              <div className="px-4 py-2 rounded-lg bg-blue-300 font-bold text-blue-700">
+                enviado
+              </div>
+            );
+          } else {
+            return (
+              <div className="px-4 py-2 rounded-lg bg-yellow-300 font-bold text-yellow-700">
+                recibido
+              </div>
+            );
+          }
+        } else {
+          return row.status === "READ" ? (
+            <div className="px-4 py-2 rounded-lg bg-green-300 font-bold text-green-700">
+              visto
+            </div>
+          ) : (
+            <div className="px-4 py-2 rounded-lg bg-red-300 font-bold text-red-700">
+              no visto
+            </div>
+          );
+        }
+      },
     },
   ];
+
+  if (user?.role === "USER") {
+    columns.splice(2, 0, {
+      name: "Enviado por",
+      selector: (row) => row.sender.firstName,
+      sortable: true,
+    });
+  }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="max-h-[14rem] overflow-y-auto shadow-md rounded-lg">
+    <div className="max-h-[22rem] overflow-y-auto shadow-md rounded-lg">
       {messages.length === 0 ? (
         <div className="flex items-center justify-center p-5">
           <Image
@@ -137,6 +170,7 @@ function UserMessages() {
           selectedMessage={selectedMessage}
         />
       )}
+      {expirationModal && <ExpirationModal />}
     </div>
   );
 }

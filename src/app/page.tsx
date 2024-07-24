@@ -13,12 +13,12 @@ import { setUserActive } from "@/redux/features/userSlice";
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!isLoading && user?.sub && (!accessToken || accessToken === "")) {
+    if (user?.sub && (!accessToken || accessToken === "")) {
       const checkUser = async () => {
         const userData = await fetchUserData(user.sub!);
         if (!userData) {
@@ -32,7 +32,8 @@ const Home = () => {
               lastName: "",
               email: "",
               sub: "",
-              role: "",
+              role: userData.role,
+              id: userData.id,
             })
           );
         }
@@ -40,9 +41,7 @@ const Home = () => {
 
       checkUser();
     }
-  }, [dispatch, user, isLoading, router]);
-
-  if (isLoading) return <div>Loading...</div>;
+  }, [dispatch, user, router]);
 
   const missionValues = MissionValuesPreload;
 
@@ -59,7 +58,7 @@ const Home = () => {
             height={1000}
           />
         </div>
-        <div className="relative z-10 text-white text-center mt-[-7rem] p-4 rounded-xl px-10">
+        <div className="relative z-10 text-white text-center mt-[-14rem] p-4 rounded-xl px-10">
           <div>
             <h1 className="text-[5rem] font-bold mb-4">SOMOS SINERGIA</h1>
             <h3 className="text-[2rem]">
@@ -68,7 +67,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <MissionValuesCards missionValues={missionValues} />
+      <div className="flex flex-col items-center mt-[-19rem] p-5 w-fit mx-auto relative z-10 bg-white">
+        <MissionValuesCards missionValues={missionValues} />
+      </div>
       <AboutUs />
     </div>
   );

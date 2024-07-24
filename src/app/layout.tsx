@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar/NavBar";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/redux/providers";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,11 @@ export default function RootLayout({
       <UserProvider>
         <body className={inter.className}>
           <Providers>
-            <NavBar />
-            <div className="mt-20">{children}</div>
+            <div className="">
+              <NavBar />
+              <div className="mt-20">{children}</div>
+              <Footer />
+            </div>
           </Providers>
         </body>
       </UserProvider>

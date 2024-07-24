@@ -1,6 +1,7 @@
 import { MessageData } from "@/types/MessageData";
 import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
+import DateComponent from "../Date/Date";
 
 interface MessageModalProps {
   isOpen: boolean;
@@ -27,25 +28,38 @@ const MessageModal: React.FC<MessageModalProps> = ({
         shouldCloseOnOverlayClick={true}
       >
         <div className="bg-white rounded-lg shadow-lg p-6 w-[75%] z-[100]">
-          <button
-            onClick={handleCloseModal}
-            className="text-[#3D63DD] hover:text-blue-600 hover:bg-[#93B4FF] transition-all duration-300 rounded-full p-1"
-          >
-            <FaTimes size={25} />
-          </button>
-          <h2 className="text-lg font-bold mb-4">Mensaje</h2>
+          <div className="flex justify-end">
+            <button
+              onClick={handleCloseModal}
+              className="text-blue-900 hover:bg-blue-300 transition-all duration-300 rounded-full p-1"
+            >
+              <FaTimes size={25} />
+            </button>
+          </div>
           {selectedMessage && (
-            <>
-              <p>
-                <strong>Título:</strong> {selectedMessage.title}
-              </p>
-              <p>
-                <strong>Descripción:</strong> {selectedMessage.description}
-              </p>
-              <p>
-                <strong>Fecha:</strong> {selectedMessage.createdAt}
-              </p>
-            </>
+            <div>
+              <div className="mb-4">
+                <div className="font-bold">Título:</div>
+                <div className="p-2 border rounded">
+                  {selectedMessage.title}
+                </div>
+              </div>
+              <div className="mb-4">
+                <div className="font-bold">Descripción:</div>
+                <div
+                  className="overflow-auto text-justify max-h-96 px-4 py-3 border w-full font-medium text-[16px] pt-4 rounded-b outline-none"
+                  dangerouslySetInnerHTML={{
+                    __html: selectedMessage.description,
+                  }}
+                />
+              </div>
+              <div className="flex justify-end">
+                <div className="mr-1">Enviado el</div>
+                <div className="font-bold">
+                  <DateComponent dateString={selectedMessage.createdAt} />
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </Modal>

@@ -16,21 +16,20 @@ const Contacto = () => {
             height={1000}
           />
         </div>
-        <div className="relative z-10 text-white text-center mt-[-7rem] p-4 rounded-xl px-10">
+        <div className="relative z-10 text-white text-center mt-[-16rem] p-4 rounded-xl px-10">
           <div>
             <h1 className="text-[5rem] font-bold mb-4">Contacto</h1>
-            <h3 className="text-[2rem]">Ponte en contacto con Nosotros</h3>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center mt-[-10rem] w-[60%] p-5 mx-auto relative z-10 bg-white">
+      <div className="flex flex-col items-center mt-[-20rem] w-[60%] p-5 mx-auto relative z-10 bg-white">
         <Contact />
         <div className="flex flex-col justify-start border-t border-gray-300 w-[63rem] mx-auto mt-10">
-          <div className="w-[25rem] flex justify-start border-t-2 border-blue-300 text-3xl font-bold py-4">
+          <div className="w-[25rem] flex justify-start border-t-2 border-[#46C2CA] text-3xl font-bold py-4">
             ¡Todos somos Sinergia!
           </div>
           <div className="relative flex mb-10">
-            <div className="border-r-2 border-blue-300 pr-4 mr-4 float-left w-[40%] flex items-center font-bold text-justify">
+            <div className="border-r-2 border-[#46C2CA] pr-4 mr-4 float-left w-[40%] flex items-center font-bold text-justify">
               Al servicio de empresas lideres, formando parte de grandes
               proyectos! Esperamos tu contacto…
             </div>
@@ -40,10 +39,10 @@ const Contacto = () => {
             </div>
           </div>
           <div className="border-t border-gray-300 w-[63rem]"></div>
-          <div className="w-[25rem] flex justify-start border-t-2 border-blue-300 text-xl font-bold py-3">
+          <div className="w-[25rem] flex justify-start border-t-2 border-[#46C2CA] text-xl font-bold py-3">
             Estas empresas ya confían en nosotros:
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between border-b">
             <div className="flex items-center">
               <Image
                 src="https://somossinergia.com.ar/wp-content/uploads/2024/03/TGS.png"
@@ -71,7 +70,7 @@ const Contacto = () => {
                 className="w-48 h-48 p-5"
               />
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center border-b-2 border-[#46C2CA]">
               <Image
                 src="https://somossinergia.com.ar/wp-content/uploads/2024/03/M-Tuz.png"
                 alt={""}

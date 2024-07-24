@@ -3,11 +3,11 @@ import React from "react";
 const AboutUs = () => {
   return (
     <div className="flex flex-col justify-start border-t border-gray-300 w-[63rem] mx-auto mt-10">
-      <div className="w-[20rem] flex justify-start border-t-2 border-blue-300 text-3xl font-bold py-4">
+      <div className="w-[20rem] flex justify-start border-t-2 border-[#46C2CA] text-3xl font-bold py-4">
         Quienes Somos
       </div>
       <div className="relative flex">
-        <div className="border-r-2 border-blue-300 pr-4 mr-4 float-left w-[40%] flex items-center font-bold text-justify">
+        <div className="border-r-2 border-[#46C2CA] pr-4 mr-4 float-left w-[40%] flex items-center font-bold text-justify">
           Somos un equipo de profesionales con más de 15 de años experiencia en
           el área de Seguridad e Higiene y Medio Ambiente.
         </div>

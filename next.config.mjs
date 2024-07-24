@@ -6,6 +6,7 @@ const nextConfig = {
       "petro.themegum.com",
       "lh3.googleusercontent.com",
       "i.ibb.co",
+      "s.gravatar.com",
     ],
   },
 };
