@@ -4,6 +4,8 @@ import { sendMessage } from "@/helpers/messageHelpers";
 import Tiptap from "../Tiptap/Tiptap";
 import { htmlToText } from "html-to-text";
 import ExpirationModal from "./ExpirationModal";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 interface SendMessageModalProps {
   onClose: () => void;
@@ -16,7 +18,6 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [expirationModal, setExpirationModal] = useState<boolean>(false);
 
@@ -25,9 +26,6 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
   };
 
   const handleSendMessage = async () => {
-    setLoading(true);
-    setError(null);
-
     const recipients = selectedUsers
       .filter((user): user is UserData => user !== undefined)
       .map((user) => user.id);
@@ -41,10 +39,11 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
 
     try {
       await sendMessage(messageData);
+      toast.success("¡Mensaje envadio con éxito!");
       onClose();
     } catch (error) {
       setExpirationModal(true);
-      setError("Failed to send message. Please try again.");
+      toast.error("Falló al enviar el mensaje");
     } finally {
       setLoading(false);
     }

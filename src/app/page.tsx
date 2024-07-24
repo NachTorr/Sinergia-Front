@@ -10,6 +10,8 @@ import { signInUser } from "@/helpers/authHelpers";
 import { fetchUserData } from "@/helpers/userHelpers";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUserActive } from "@/redux/features/userSlice";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,7 @@ const Home = () => {
               id: userData.id,
             })
           );
+          toast.success("¡Bienvenido!");
         }
       };
 

@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar/NavBar";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Providers } from "@/redux/providers";
 import Footer from "@/components/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <Providers>
             <div className="">
+              <ToastContainer />
               <NavBar />
               <div className="mt-20">{children}</div>
               <Footer />
