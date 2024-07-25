@@ -1,68 +1,100 @@
 import { MessageData } from "@/types/MessageData";
-import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import DateComponent from "../Date/Date";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "@/redux/hooks";
 
 interface MessageModalProps {
-  isOpen: boolean;
   onRequestClose: () => void;
   selectedMessage: MessageData | null;
 }
 
 const MessageModal: React.FC<MessageModalProps> = ({
-  isOpen,
   onRequestClose,
   selectedMessage,
 }) => {
-  const handleCloseModal = async () => {
-    onRequestClose();
+  const user = useAppSelector((state) => state.user.userActive);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const handleCloseModal = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onRequestClose();
+    }, 300);
   };
 
   return (
-    <div className="bg-red-400">
-      <Modal
-        className="fixed inset-0 flex items-center justify-center z-50 outline-none"
-        isOpen={isOpen}
-        onRequestClose={handleCloseModal}
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-40"
-        shouldCloseOnOverlayClick={true}
+    <div
+      className={`fixed inset-0 bg-gray-800 bg-opacity-80 overflow-y-auto h-full w-full flex justify-center items-center z-50 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      } transition-all duration-300`}
+    >
+      <div
+        className={`bg-white rounded-lg shadow-lg p-6 w-fit max-w-[60%] md:min-w-[40%] z-[100] ${
+          isVisible ? "scale-100" : "scale-90"
+        } transition-all duration-300`}
       >
-        <div className="bg-white rounded-lg shadow-lg p-6 w-[75%] z-[100]">
-          <div className="flex justify-end">
-            <button
-              onClick={handleCloseModal}
-              className="text-blue-900 hover:bg-blue-300 transition-all duration-300 rounded-full p-1"
-            >
-              <FaTimes size={25} />
-            </button>
-          </div>
-          {selectedMessage && (
-            <div>
-              <div className="mb-4">
-                <div className="font-bold">Título:</div>
-                <div className="p-2 border rounded">
-                  {selectedMessage.title}
-                </div>
+        <div className="flex justify-end">
+          <button
+            onClick={handleCloseModal}
+            className="text-blue-900 hover:bg-blue-300 transition-all duration-300 rounded-full p-1"
+          >
+            <FaTimes size={25} />
+          </button>
+        </div>
+        {selectedMessage && (
+          <div className="">
+            <div className="mb-4">
+              <div className="font-bold">Título:</div>
+              <div className="p-2 border rounded">{selectedMessage.title}</div>
+            </div>
+            <div className="mb-4">
+              <div className="font-bold">Descripción:</div>
+              <div
+                className="overflow-auto text-justify max-h-96 px-6 py-3 border w-full font-medium text-[16px] pt-4 rounded-b outline-none"
+                dangerouslySetInnerHTML={{
+                  __html: selectedMessage.description,
+                }}
+              />
+            </div>
+            <div className="flex justify-between">
+              <div>
+                {user?.role === "ADMIN" ? (
+                  <div>
+                    <div>Enviado a:</div>
+                    <div className="flex">
+                      <div className="font-bold">
+                        {selectedMessage.recipient.firstName}{" "}
+                        {selectedMessage.recipient.lastName}{" "}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div>Enviado por:</div>
+                    <div className="flex">
+                      <div className="font-bold">
+                        {selectedMessage.sender.firstName}{" "}
+                        {selectedMessage.sender.lastName}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="mb-4">
-                <div className="font-bold">Descripción:</div>
-                <div
-                  className="overflow-auto text-justify max-h-96 px-4 py-3 border w-full font-medium text-[16px] pt-4 rounded-b outline-none"
-                  dangerouslySetInnerHTML={{
-                    __html: selectedMessage.description,
-                  }}
-                />
-              </div>
-              <div className="flex justify-end">
+              <div className="">
                 <div className="mr-1">Enviado el</div>
                 <div className="font-bold">
                   <DateComponent dateString={selectedMessage.createdAt} />
                 </div>
               </div>
             </div>
-          )}
-        </div>
-      </Modal>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

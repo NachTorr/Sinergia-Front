@@ -4,7 +4,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 
-const PostLogin = () => {
+const Onboard = () => {
   const { user } = useUser();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -122,4 +122,4 @@ const PostLogin = () => {
   );
 };
 
-export default PostLogin;
+export default Onboard;

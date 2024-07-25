@@ -8,6 +8,9 @@ import MessageModal from "../Modals/MessageModal";
 import { readMessageAction } from "@/redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ExpirationModal from "../Modals/ExpirationModal";
+import { TokenExpiredError } from "@/helpers/userHelpers";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function UserMessages() {
   const [showModal, setShowModal] = useState(false);
@@ -22,33 +25,29 @@ function UserMessages() {
   const user = useAppSelector((state) => state.user.userActive);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchMessages = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-          const messages = await getMessages(accessToken);
-
+        const messages = await getMessages();
+        if (messages) {
           const sortedMessages = messages.sort(
             (a, b) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
           setMessages(sortedMessages);
-        } else {
-          setError("No access token found");
         }
       } catch (error) {
-        setExpirationModal(true);
+        if (error instanceof TokenExpiredError) {
+          setExpirationModal(true);
+        } else {
+          toast.error("Error al obtener datos del usuario.");
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchMessages();
   }, []);
-
-  useEffect(() => {
-    console.log("User data:", user);
-  }, [user]);
 
   const handleReadClick = async (message: MessageData) => {
     if (message.status === "UNREAD" && user?.role === "USER") {
@@ -58,13 +57,8 @@ function UserMessages() {
         )
       );
       try {
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-          await updateMessageStatus(message.id, accessToken);
-          dispatch(readMessageAction(message.id));
-        } else {
-          setError("No access token found");
-        }
+        await updateMessageStatus(message.id);
+        dispatch(readMessageAction(message.id));
       } catch (error) {
         setError("Error updating message status");
       }
@@ -85,7 +79,7 @@ function UserMessages() {
       cell: (row) => (
         <button
           onClick={() => handleReadClick(row)}
-          className=" ml-4 px-2 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+          className=" ml-4 px-2 py-2 bg-[#46C2CA] text-white rounded-lg hover:bg-blue-700"
         >
           {user?.role === "ADMIN" ? "Ver" : "Leer"}
         </button>
@@ -112,7 +106,7 @@ function UserMessages() {
         if (user?.role === "ADMIN") {
           if (row.sender.id === user.id) {
             return (
-              <div className="px-4 py-2 rounded-lg bg-blue-300 font-bold text-blue-700">
+              <div className="px-4 py-2 rounded-lg bg-green-300 font-bold text-green-700">
                 enviado
               </div>
             );
@@ -150,9 +144,9 @@ function UserMessages() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="max-h-[22rem] overflow-y-auto shadow-md rounded-lg">
+    <div className="max-h-[22rem] shadow-md rounded-lg">
       {messages.length === 0 ? (
-        <div className="flex items-center justify-center p-5">
+        <div className="py-20 flex items-center justify-center p-5 bg-white border">
           <Image
             src="/images/Sinergia-NoMessages.png"
             alt={""}
@@ -161,16 +155,23 @@ function UserMessages() {
           />
         </div>
       ) : (
-        <DataTable columns={columns} data={messages} pagination fixedHeader />
+        <DataTable
+          columns={columns}
+          data={messages}
+          pagination
+          fixedHeader
+          className="h-[18rem]"
+        />
       )}
       {showModal && (
         <MessageModal
-          isOpen={showModal}
           onRequestClose={handleCloseModal}
           selectedMessage={selectedMessage}
         />
       )}
-      {expirationModal && <ExpirationModal />}
+      {expirationModal && (
+        <ExpirationModal setExpirationModal={setExpirationModal} />
+      )}
     </div>
   );
 }

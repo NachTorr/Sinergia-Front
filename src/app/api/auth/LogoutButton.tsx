@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { MdOutlineLogin } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/redux/features/userSlice";
 

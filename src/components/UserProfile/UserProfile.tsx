@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchCurrentUser } from "@/helpers/userHelpers";
+import { fetchCurrentUser, TokenExpiredError } from "@/helpers/userHelpers";
 import Image from "next/image";
 import { UserData } from "@/types/UserData";
 import UserInfo from "./UserInfo";
 import UserMessages from "./UserMessages";
 import UsersList from "./UsersList";
 import ExpirationModal from "../Modals/ExpirationModal";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const UserProfile = () => {
   const [currentUser, setCurrentUser] = useState<UserData | null>(null);
@@ -17,11 +19,15 @@ const UserProfile = () => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const user = await fetchCurrentUser();
-      if (!user) {
-        setExpirationModal(true);
-      } else {
+      try {
+        const user = await fetchCurrentUser();
         setCurrentUser(user);
+      } catch (error) {
+        if (error instanceof TokenExpiredError) {
+          setExpirationModal(true);
+        } else {
+          toast.error("Error al obtener datos del usuario.");
+        }
       }
     };
 
@@ -61,7 +67,7 @@ const UserProfile = () => {
               {currentUser?.firstName} {currentUser?.lastName}
             </div>
             <div className="my-5 px-6">
-              <div className="font-bold text-gray-200 rounded-lg text-center  py-3 bg-blue-900 hover:bg-black hover:text-white">
+              <div className="font-bold text-gray-200 rounded-lg text-center py-3 bg-blue-900">
                 Tu perfil
               </div>
             </div>
@@ -69,7 +75,7 @@ const UserProfile = () => {
               <div className="flex justify-between items-center my-5 px-6">
                 <button
                   onClick={() => setActiveSection("info")}
-                  className={`hover:bg-blue-300 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 ${
+                  className={`hover:bg-blue-900 hover:text-white hover:font-semibold rounded transition-all duration-300 font-medium text-sm text-center w-full py-3 ${
                     activeSection === "info" ? "bg-gray-100" : ""
                   }`}
                 >
@@ -77,7 +83,7 @@ const UserProfile = () => {
                 </button>
                 <button
                   onClick={() => setActiveSection("messages")}
-                  className={`hover:bg-blue-300 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 ${
+                  className={`hover:bg-blue-900 hover:text-white hover:font-semibold rounded transition-all duration-300 font-medium text-sm text-center w-full py-3 ${
                     activeSection === "messages" ? "bg-gray-100" : ""
                   }`}
                 >
@@ -86,7 +92,7 @@ const UserProfile = () => {
                 {currentUser?.role === "ADMIN" && (
                   <button
                     onClick={() => setActiveSection("users")}
-                    className={`hover:bg-blue-300 rounded transition duration-150 ease-in font-medium text-sm text-center w-full py-3 ${
+                    className={`hover:bg-blue-900 hover:text-white hover:font-semibold rounded transition-all duration-300 font-medium text-sm text-center w-full py-3 ${
                       activeSection === "messages" ? "bg-gray-100" : ""
                     }`}
                   >
@@ -116,7 +122,9 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      {expirationModal && <ExpirationModal />}
+      {expirationModal && (
+        <ExpirationModal setExpirationModal={setExpirationModal} />
+      )}
     </div>
   );
 };

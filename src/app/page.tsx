@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
@@ -10,13 +10,13 @@ import { signInUser } from "@/helpers/authHelpers";
 import { fetchUserData } from "@/helpers/userHelpers";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUserActive } from "@/redux/features/userSlice";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import OnBoardModal from "@/components/Modals/OnboardModal";
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const { user } = useUser();
   const router = useRouter();
+  const [onboardModal, setOnboardModal] = useState<boolean>(false);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -24,7 +24,7 @@ const Home = () => {
       const checkUser = async () => {
         const userData = await fetchUserData(user.sub!);
         if (!userData) {
-          router.push("/onboard");
+          setOnboardModal(true);
         } else {
           await signInUser(userData);
           dispatch(
@@ -38,7 +38,6 @@ const Home = () => {
               id: userData.id,
             })
           );
-          toast.success("¡Bienvenido!");
         }
       };
 
@@ -74,6 +73,7 @@ const Home = () => {
         <MissionValuesCards missionValues={missionValues} />
       </div>
       <AboutUs />
+      {onboardModal && <OnBoardModal setOnBoardModal={setOnboardModal} />}
     </div>
   );
 };

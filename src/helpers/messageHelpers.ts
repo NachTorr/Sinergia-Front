@@ -1,34 +1,53 @@
 import axiosInstance from "./axiosInstance";
 import { MessageData, SendMessageData } from "@/types/MessageData";
+import { TokenExpiredError } from "./userHelpers";
 
-export const getMessages = async (
-  accessToken: string
-): Promise<MessageData[]> => {
-  const response = await axiosInstance.get("/messages", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  return response.data;
+export const getMessages = async (): Promise<MessageData[] | null> => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
+  try {
+    const response = await axiosInstance.get("/messages", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      throw new TokenExpiredError();
+    }
+    console.error("Error fetching messages:", error);
+    return null;
+  }
 };
 
 export const updateMessageStatus = async (
-  id: number,
-  accessToken: string
-): Promise<MessageData> => {
-  const response = await axiosInstance.patch(
-    `/messages/${id}/status`,
-    { status: "READ" },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
+  id: number
+): Promise<MessageData | null> => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
+  try {
+    const response = await axiosInstance.patch(
+      `/messages/${id}/status`,
+      { status: "READ" },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      throw new TokenExpiredError();
+    } else if (error.response && error.response.status === 404) {
+      return null;
+    } else {
+      console.error(`Failed to update message: ${error.response.statusText}`);
+      return null;
     }
-  );
-
-  return response.data;
+  }
 };
 
 export const sendMessage = async (

@@ -11,6 +11,7 @@ import {
   MdOutlineLogin,
 } from "react-icons/md";
 import LogoutModal from "../Modals/LogoutModal";
+import Link from "next/link";
 
 const NavBar = () => {
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
@@ -66,15 +67,21 @@ const NavBar = () => {
         </a>
         <div className="contents font-semibold text-base lg:text-lg">
           <div className="mx-auto flex items-center cursor-pointer">
-            <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
-              <a href="/">Inicio</a>
-            </div>
-            <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
-              <a href="/servicios">Servicios</a>
-            </div>
-            <div className="px-4 py-1 hover:text-[#46C2CA] transition-all duration-300">
-              <a href="/contacto">Contacto</a>
-            </div>
+            <Link href={"/"}>
+              <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
+                <div>Inicio</div>
+              </div>
+            </Link>
+            <Link href="/servicios">
+              <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
+                <div>Servicios</div>
+              </div>
+            </Link>
+            <Link href="/contacto">
+              <div className="px-4 py-1 hover:text-[#46C2CA] transition-all duration-300">
+                <div>Contacto</div>
+              </div>
+            </Link>
           </div>
         </div>
         {!user && (
