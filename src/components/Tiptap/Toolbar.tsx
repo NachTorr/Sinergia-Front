@@ -23,7 +23,6 @@ type Props = {
 
 const Toolbar = ({ editor, content }: Props) => {
   if (!editor) {
-    console.log("Editor not initialized");
     return null;
   }
   return (
@@ -32,7 +31,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("Bold button clicked");
             editor.chain().focus().toggleBold().run();
           }}
           className={
@@ -46,7 +44,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("Italic button clicked");
             editor.chain().focus().toggleItalic().run();
           }}
           className={
@@ -60,7 +57,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("Underline button clicked");
             editor.chain().focus().toggleUnderline().run();
           }}
           className={
@@ -74,7 +70,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("Strikethrough button clicked");
             editor.chain().focus().toggleStrike().run();
           }}
           className={
@@ -88,7 +83,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("BulletList button clicked");
             editor.chain().focus().toggleBulletList().run();
           }}
           className={
@@ -102,7 +96,6 @@ const Toolbar = ({ editor, content }: Props) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            console.log("OrderedList button clicked");
             editor.chain().focus().toggleOrderedList().run();
           }}
           className={

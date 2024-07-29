@@ -35,7 +35,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
     formState: { errors, isValid },
   } = useForm<Inputs>({
     resolver: zodResolver(messageSchema),
-    mode: "onChange", // Valida en cada cambio
+    mode: "onChange",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,6 +46,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
     setIsVisible(true);
   }, []);
 
+  // Cerrar el modal si no hay usuarios seleccionados
   useEffect(() => {
     if (selectedUsers.length === 0) {
       setIsVisible(false);
@@ -69,6 +70,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
       .filter((user): user is UserData => user !== undefined)
       .map((user) => user.id);
 
+    // Solo enviar el mensaje si hay destinatarios
     if (recipients.length === 0) {
       toast.error("No hay usuarios seleccionados.");
       return;
@@ -80,6 +82,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
     };
 
     try {
+      setLoading(true);
       await sendMessage(messageData);
       toast.success("¡Mensaje enviado con éxito!");
     } catch (error) {
@@ -89,6 +92,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
         toast.error("Error al enviar el mensaje.");
       }
     } finally {
+      setLoading(false);
       setIsVisible(false);
       setTimeout(() => {
         onClose();
@@ -149,6 +153,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
                 user ? (
                   <div className="relative" key={index}>
                     <button
+                      type="button"
                       onClick={() => handleRemoveUser(user.id)}
                       className="group"
                     >

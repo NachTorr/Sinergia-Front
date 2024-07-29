@@ -21,7 +21,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
                 {firstName}
               </div>
             </div>
-            <EditButton />
+            {/* <EditButton /> */}
           </div>
           <hr className="my-4" />
         </div>
@@ -35,7 +35,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
                 {lastName}
               </div>
             </div>
-            <EditButton />
+            {/* <EditButton /> */}
           </div>
           <hr className="my-4" />
         </div>
@@ -49,7 +49,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
                 {email}
               </div>
             </div>
-            <EditButton />
+            {/* <EditButton /> */}
           </div>
           <hr className="mt-4" />
         </div>
