@@ -4,3 +4,9 @@ export interface ServiceCardType {
   description: string;
   imgUrl: string;
 }
+
+export interface ServiceCardDetails {
+  title: string;
+  imgUrl: string;
+  description: string;
+}
