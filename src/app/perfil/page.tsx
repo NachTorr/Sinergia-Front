@@ -1,6 +1,6 @@
 import UserProfile from "@/components/UserProfile/UserProfile";
 
-const Profile = () => {
+const Perfil = () => {
   return (
     <div>
       <UserProfile />
@@ -8,4 +8,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Perfil;
