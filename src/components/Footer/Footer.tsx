@@ -10,11 +10,11 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#eff3f6] border border-[#dcdde1] text-black mt-24">
-      <div className="p-5 flex items-center justify-around">
-        <div>
-          <h3 className="text-2xl font-bold mb-4">Somos Sinergia</h3>
-          <div className="mb-4">
+    <footer className="bg-[#eff3f6] border border-[#dcdde1] text-black mt-10 md:mt-24">
+      <div className="p-5 flex flex-col md:flex-row md:items-center justify-around">
+        <div className="flex flex-col md:flex-none">
+          <h3 className="md:text-2xl font-bold mb-4">Somos Sinergia</h3>
+          <div className="mb-4 flex">
             <a
               href="/"
               className="inline-block mr-4 hover:text-[#46C2CA] transition-all duration-300 pr-4 border-dotted border-r-2 border-black"
@@ -53,8 +53,8 @@ const Footer: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="w-full md:w-1/3 mt-8 md:mt-0 desktop:text-start mobile:text-center">
-          <div className="mb-4">
+        <div className="w-full md:w-1/3 mt-8 md:mt-0 desktop:text-start mobile:text-center hidden md:block">
+          <div className="mb-4 ">
             <span className="font-bold">Sobre nosotros</span>
             <br />
             <p className="text-sm text-justify">

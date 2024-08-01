@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import LoginButton from "@/app/api/auth/LoginButton";
-import LogoutButton from "@/app/api/auth/LogoutButton";
 import CustomButton from "../CustomButton/CustomButton";
 import { useAppSelector } from "@/redux/hooks";
 import {
@@ -55,30 +54,30 @@ const NavBar = () => {
 
   return (
     <div className="fixed top-0 left-0 w-screen z-20 bg-[#eff3f6] border border-[#dcdde1] text-black shadow-lg">
-      <div className="container mx-auto flex items-center h-24 justify-center">
-        <a href="" className="flex items-center justify-center">
+      <div className="flex items-center h-24 justify-center">
+        <div className="flex items-center justify-center px-2">
           <Image
-            className="h-16"
+            className="h-10 w-10 md:h-16 md:w-16"
             src="https://somossinergia.com.ar/wp-content/uploads/2024/03/Logo-SINERGIA-SIN-Fondo-SOLO-LOGO-121x110.png"
             alt="Logo"
             width={64}
             height={64}
           />
-        </a>
-        <div className="contents font-semibold text-base lg:text-lg">
-          <div className="mx-auto flex items-center cursor-pointer">
+        </div>
+        <div className="contents font-semibold text-sm md:text-lg">
+          <div className="px-2 md:w-[70%] flex items-center justify-center cursor-pointer">
             <Link href={"/"}>
-              <div className="px-4 py-1 border-dotted border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
+              <div className="px-2 md:px-4 py-1 border-dotted border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
                 <div>Inicio</div>
               </div>
             </Link>
             <Link href="/servicios">
-              <div className="px-4 py-1 border-dotted active border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
+              <div className="px-2 md:px-4 py-1 border-dotted active border-r-2 border-black hover:text-[#46C2CA] transition-all duration-300">
                 <div>Servicios</div>
               </div>
             </Link>
             <Link href="/contacto">
-              <div className="px-4 py-1 hover:text-[#46C2CA] transition-all duration-300">
+              <div className="px-2 md:px-4 py-1 hover:text-[#46C2CA] transition-all duration-300">
                 <div>Contacto</div>
               </div>
             </Link>
@@ -91,11 +90,11 @@ const NavBar = () => {
         )}
         {user && (
           <div className="relative">
-            <div className="flex items-center">
+            <div className="">
               {user.profileImgUrl && (
                 <button
                   onClick={handleShowUserModal}
-                  className="flex items-center p-2"
+                  className="flex items-center"
                 >
                   {showUserModal ? (
                     <MdOutlineArrowDropUp className="size-8 text-blue-900" />
@@ -156,7 +155,7 @@ const NavBar = () => {
                     onClick={handleCloseModal}
                     className="py-2 hover:bg-[#eff3f6] hover:border-r-2 border-[#46C2CA] hover:text-[#46C2CA] transition-all duration-300"
                   >
-                    <CustomButton name="Tu Perfil" href="/profile" />
+                    <CustomButton name="Tu Perfil" href="/perfil" />
                   </div>
                   <button
                     onClick={handleShowLogoutModal}

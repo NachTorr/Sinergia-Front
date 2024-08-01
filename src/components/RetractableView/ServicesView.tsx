@@ -5,13 +5,14 @@ import { ServiceCardDetails } from "@/types/ServiceCardType";
 const ServicesView = ({ title, imgUrl, description }: ServiceCardDetails) => {
   return (
     <div>
-      <div className="flex justify-center items-center gap-5 mt-24 bg-[#EFF3F6] border-b-2 border-[#46C2CA] py-5">
+      <div className="flex justify-center items-center gap-5 mt-10 md:mt-24 bg-[#EFF3F6] border-b-2 border-[#46C2CA] py-5">
         <div>
           <Image
             src="/images/Sinergia-Logo.png"
             alt={""}
             width={90}
             height={90}
+            className="w-14 md:w-24"
           />
         </div>
         <div>
@@ -27,7 +28,7 @@ const ServicesView = ({ title, imgUrl, description }: ServiceCardDetails) => {
             </div>
           </div>
           <div className="h-auto">
-            <div className="float-left w-[50%] border-r-2 border-[#46C2CA] p-5">
+            <div className="md:float-left md:w-[50%] md:border-r-2 border-b-2 md:border-b-0 border-[#46C2CA] p-5">
               {imgUrl && (
                 <Image
                   className="w-96"
@@ -38,7 +39,7 @@ const ServicesView = ({ title, imgUrl, description }: ServiceCardDetails) => {
                 />
               )}
             </div>
-            <div className="float-right w-[50%] p-5 text-justify">
+            <div className="md:float-right md:w-[50%] p-5 text-justify">
               {description}
             </div>
           </div>

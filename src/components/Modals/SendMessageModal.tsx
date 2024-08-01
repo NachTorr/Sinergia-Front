@@ -118,7 +118,7 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
       } transition-all duration-300`}
     >
       <div
-        className={`bg-white p-6 rounded shadow-lg w-1/2 ${
+        className={`bg-white p-6 rounded shadow-lg mt-40 md:mt-0 max-w-full lg:w-1/2 ${
           isVisible ? "scale-100" : "scale-90"
         } transition-all duration-300`}
       >

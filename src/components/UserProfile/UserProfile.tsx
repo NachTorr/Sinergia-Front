@@ -36,20 +36,20 @@ const UserProfile = () => {
 
   return (
     <div>
-      <div className="relative w-full h-[45rem] flex items-center justify-center">
-        <div className="absolute z-[1] inset-0 bg-gray-900 opacity-20"></div>
+      <div className="relative w-full h-[23rem] md:h-[45rem] flex items-center justify-center">
+        <div className="absolute z-[1] inset-0 h-96 md:h-[45rem] bg-gray-900 opacity-30"></div>
         <div className="absolute inset-0 z-0">
           <Image
             src="http://petro.themegum.com/elementor/wp-content/uploads/sites/3/2017/06/slide-2.jpg"
             alt="Background Image"
-            className="w-full h-full"
+            className="object-cover object-top h-96 md:h-full md:w-full"
             width={1000}
             height={1000}
           />
         </div>
       </div>
-      <div className="mt-[-30rem] w-fit p-5 mx-auto relative z-10 bg-white">
-        <div className="bg-[#EFF3F6] shadow-lg rounded-lg mx-auto w-[70rem] h-[40rem]">
+      <div className="mt-[-10rem] md:mt-[-30rem] p-2 md:p-5 relative z-10 bg-white">
+        <div className="bg-[#EFF3F6] shadow-lg rounded-lg lg:mx-auto w-full xl:w-[70rem] h-[40rem]">
           <div className="flex justify-center">
             <Image
               src={
@@ -66,13 +66,13 @@ const UserProfile = () => {
             <div className="font-bold text-center text-3xl text-gray-900">
               {currentUser?.firstName} {currentUser?.lastName}
             </div>
-            <div className="my-5 px-6">
+            <div className="my-5 md:px-6">
               <div className="font-bold text-gray-200 rounded-lg text-center py-3 bg-blue-900">
                 Tu perfil
               </div>
             </div>
             <div className="">
-              <div className="flex justify-between items-center my-5 px-6">
+              <div className="flex justify-between items-center my-5 lg:px-6 ">
                 <button
                   onClick={() => setActiveSection("info")}
                   className={`hover:bg-blue-900 hover:text-white hover:font-semibold rounded transition-all duration-300 font-medium text-sm text-center w-full py-3 ${
@@ -100,8 +100,8 @@ const UserProfile = () => {
                   </button>
                 )}
               </div>
-              <div className="px-6">
-                <div className="px-6">
+              <div className="lg:px-6 ">
+                <div className="lg:px-6">
                   {activeSection === "info" && (
                     <UserInfo
                       firstName={currentUser?.firstName || ""}

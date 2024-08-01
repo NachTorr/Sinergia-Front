@@ -79,13 +79,13 @@ function UserMessages() {
       cell: (row) => (
         <button
           onClick={() => handleReadClick(row)}
-          className=" ml-4 px-2 py-2 bg-[#46C2CA] text-white rounded-lg hover:bg-blue-700"
+          className="md:w-24 lg:w-28 xl:w-32 w-full px-2 py-2 bg-[#46C2CA] text-white rounded-lg hover:bg-blue-700"
         >
           {user?.role === "ADMIN" ? "Ver" : "Leer"}
         </button>
       ),
       ignoreRowClick: true,
-      width: "100px",
+      width: "70px",
     },
     {
       name: "Título",

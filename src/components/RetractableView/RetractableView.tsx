@@ -23,17 +23,17 @@ const RetractableView: React.FC<RetractableViewBlackProps> = ({
       <div
         className={`fixed z-[102] top-0 right-0 h-full bg-white overflow-y-auto p-4 transition-all duration-300 ease-in-out ${
           show
-            ? "transform translate-x-0 w-[60rem]"
+            ? "transform translate-x-0 w-full md:w-[60rem]"
             : "transform translate-x-full w-0"
         }`}
       >
         <button
-          className="absolute top-0 left-0 m-5 hover:bg-[#EFF3F6] p-2 rounded-full transition-all duration-300 ease-in-out"
+          className="absolute top-0 left-0 m-1 md:m-5 hover:bg-[#EFF3F6] p-2 rounded-full transition-all duration-300 ease-in-out"
           onClick={onClose}
         >
-          <div className="flex items-center gap-3">
-            <GoArrowLeft className="size-8" />
-            <div className="text-xl">Cerrar</div>
+          <div className="flex items-center gap-1 md:gap-3">
+            <GoArrowLeft className="size-6 md:size-8" />
+            <div className="md:text-xl">Cerrar</div>
           </div>
         </button>
         <div>{children}</div>

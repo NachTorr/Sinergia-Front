@@ -34,7 +34,7 @@ const MessageModal: React.FC<MessageModalProps> = ({
       } transition-all duration-300`}
     >
       <div
-        className={`bg-white rounded-lg shadow-lg p-6 w-fit max-w-[60%] md:min-w-[40%] z-[100] ${
+        className={`bg-white rounded-lg shadow-lg p-6 mt-40 md:mt-0 w-fit max-w-full md:max-w-[60%] md:min-w-[40%] z-[100] ${
           isVisible ? "scale-100" : "scale-90"
         } transition-all duration-300`}
       >
@@ -56,6 +56,11 @@ const MessageModal: React.FC<MessageModalProps> = ({
               <div className="font-bold">Descripción:</div>
               <div
                 className="overflow-auto text-justify max-h-96 px-6 py-3 border w-full font-medium text-[16px] pt-4 rounded-b outline-none"
+                style={{
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
+                  whiteSpace: "pre-wrap", // Esto mantiene los saltos de línea
+                }}
                 dangerouslySetInnerHTML={{
                   __html: selectedMessage.description,
                 }}

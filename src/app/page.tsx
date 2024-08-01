@@ -49,30 +49,34 @@ const Home = () => {
 
   return (
     <div>
-      <div className="relative w-full h-[45rem] flex items-center justify-center">
-        <div className="absolute z-[1] inset-0 bg-gray-900 opacity-20"></div>
+      <div className="relative w-full h-[23rem] md:h-[45rem] flex items-center justify-center ">
+        <div className="absolute z-[1] h-96 md:h-[45rem] inset-0 bg-gray-900 opacity-20"></div>
         <div className="absolute inset-0 z-0">
           <Image
             src="http://petro.themegum.com/elementor/wp-content/uploads/sites/3/2017/06/slide-2.jpg"
-            alt="Background Image"
-            className="w-full h-full"
+            alt=""
+            className="object-cover object-top h-96 md:h-full md:w-full"
             width={1000}
             height={1000}
           />
         </div>
-        <div className="relative z-10 text-white text-center mt-[-14rem] p-4 rounded-xl px-10">
+        <div className="relative z-10 text-white text-center mt-[-4rem] md:mt-[-14rem] p-4 rounded-xl px-10">
           <div>
-            <h1 className="text-[5rem] font-bold mb-4">SOMOS SINERGIA</h1>
-            <h3 className="text-[2rem]">
+            <h1 className="text-[2rem] md:text-[5rem] font-bold mb-4">
+              SOMOS SINERGIA
+            </h1>
+            <h3 className="md:text-[2rem]">
               Seguridad e Higiene y Medio Ambiente
             </h3>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center mt-[-19rem] p-5 w-fit mx-auto relative z-10 bg-white">
+      <div className="flex flex-col items-center mt-[-5rem] md:mt-[-19rem] p-5 w-fit mx-auto relative z-10 bg-white">
         <MissionValuesCards missionValues={missionValues} />
       </div>
-      <AboutUs />
+      <div>
+        <AboutUs />
+      </div>
       {onboardModal && <OnBoardModal setOnBoardModal={setOnboardModal} />}
     </div>
   );

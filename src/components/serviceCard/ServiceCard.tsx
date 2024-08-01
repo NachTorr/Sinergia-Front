@@ -4,7 +4,7 @@ import { ServiceCardType } from "@/types/ServiceCardType";
 
 const ServiceCard = ({ title, imgUrl }: ServiceCardType) => {
   return (
-    <div className="cursor-pointer group bg-[#eff3f6] border border-[#dcdde1] hover:bg-[#46C2CA] hover:border-blue-300 w-[23rem] h-[30rem] shadow-lg flex flex-col text-center transition-all duration-300 relative overflow-hidden">
+    <div className="cursor-pointer group bg-[#eff3f6] border border-[#dcdde1] hover:bg-[#46C2CA] hover:border-blue-300 md:w-[23rem] h-[30rem] shadow-lg flex flex-col text-center transition-all duration-300 relative overflow-hidden">
       <div className="h-[50%]">
         <Image
           className="h-full w-full object-cover"

@@ -7,13 +7,13 @@ import { ImWhatsapp } from "react-icons/im";
 
 const Contact = () => {
   return (
-    <div className="bg-[#EFF3F6] border border-[#DCDDE1] w-full flex flex-col items-center shadow-lg p-5">
+    <div className="bg-[#EFF3F6] border border-[#DCDDE1] md:h-auto md:w-full flex flex-col justify-center items-center shadow-lg md:p-5">
       <div>
-        <h3 className="text-[2rem] text-center mb-5 font-bold">
+        <h3 className="md:text-[2rem] text-center md:mb-5 mt-5 md:mt-0 font-bold">
           Ponte en contacto con Nosotros
         </h3>
       </div>
-      <div className="flex gap-10">
+      <div className="flex gap-5 md:gap-10 scale-50 md:scale-100">
         <button className="bg-[#075e54] w-32 rounded-xl p-1 flex flex-col items-center">
           <Link href="https://api.whatsapp.com/send/?phone=5492994590303&text&type=phone_number&app_absent=0">
             <div className="flex flex-col items-center justify-center">

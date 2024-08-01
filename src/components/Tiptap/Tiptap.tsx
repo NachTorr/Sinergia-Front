@@ -11,7 +11,7 @@ const Tiptap = ({ onChange, content }: any) => {
     editorProps: {
       attributes: {
         class:
-          "overflow-auto h-96 px-5 py-3 border-b border-r border-l w-full font-medium text-[16px] pt-4 rounded-b outline-none",
+          "block overflow-auto h-60 md:h-96 px-5 py-3 border-b border-r border-l w-full font-medium text-[16px] pt-4 rounded-b outline-none",
       },
     },
     onUpdate: ({ editor }) => {

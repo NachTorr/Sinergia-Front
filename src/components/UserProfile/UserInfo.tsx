@@ -14,7 +14,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
         <div className="mb-4">
           <div className="flex items-center justify-between">
             <div className="flex relative w-full">
-              <div className="relative float-left w-[20%]">
+              <div className="relative float-left md:w-[20%] w-[30%]">
                 <h6 className="font-semibold">Nombre</h6>
               </div>
               <div className="relative float-right w-[80%] text-secondary">
@@ -28,7 +28,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
         <div className="mb-4">
           <div className="flex items-center justify-between">
             <div className="flex relative w-full">
-              <div className="relative float-left w-[20%]">
+              <div className="relative float-left md:w-[20%] w-[30%]">
                 <h6 className="font-semibold">Apellido</h6>
               </div>
               <div className="relative float-right w-[80%] text-secondary">
@@ -42,7 +42,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ firstName, lastName, email }) => {
         <div className="mb-4">
           <div className="flex items-center justify-between">
             <div className="flex relative w-full">
-              <div className="relative float-left w-[20%]">
+              <div className="relative float-left md:w-[20%] w-[30%]">
                 <h6 className="font-semibold">Email</h6>
               </div>
               <div className="relative float-right w-[80%] text-secondary">
