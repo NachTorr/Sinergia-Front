@@ -9,6 +9,7 @@ const nextConfig = {
       "s.gravatar.com",
     ],
   },
+  output: "export",
 };
 
 export default nextConfig;
