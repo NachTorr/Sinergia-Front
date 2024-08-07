@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const UsersList = () => {
   const [usersList, setUsersList] = useState<UserData[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<UserData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [expirationModal, setExpirationModal] = useState<boolean>(false);
 
@@ -34,24 +34,28 @@ const UsersList = () => {
     fetchUsers();
   }, []);
 
-  const handleSelectUser = (id: number) => {
+  const handleSelectUser = (user: UserData) => {
     setSelectedUsers((prev) =>
-      prev.includes(id) ? prev.filter((userId) => userId !== id) : [...prev, id]
+      prev.some((selectedUser) => selectedUser.id === user.id)
+        ? prev.filter((selectedUser) => selectedUser.id !== user.id)
+        : [...prev, user]
     );
   };
 
-  const removeUser = (id: number) => {
-    setSelectedUsers((prev) => prev.filter((userId) => userId === id));
+  const handleRemoveUser = (userId: number) => {
+    setSelectedUsers((prevUsers) =>
+      prevUsers.filter((user) => user.id !== userId)
+    );
   };
 
   const columns: TableColumn<UserData>[] = [
     {
       name: "Seleccionar",
-      cell: (row) => (
+      cell: (row: UserData) => (
         <input
           type="checkbox"
-          checked={selectedUsers.includes(row.id)}
-          onChange={() => handleSelectUser(row.id)}
+          checked={selectedUsers.some((user) => user.id === row.id)}
+          onChange={() => handleSelectUser(row)}
         />
       ),
       width: "100px",
@@ -105,10 +109,8 @@ const UsersList = () => {
       {isModalOpen && (
         <SendMessageModal
           onClose={() => setIsModalOpen(false)}
-          selectedUsers={selectedUsers.map((id) =>
-            usersList?.find((user) => user.id === id)
-          )}
-          onRemoveUser={removeUser}
+          selectedUsers={selectedUsers}
+          onRemoveUser={handleRemoveUser}
         />
       )}
       {expirationModal && (
